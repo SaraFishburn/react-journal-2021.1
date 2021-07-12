@@ -6,7 +6,7 @@ const NewEntry = (props) => {
     const [errorMessage, setErrorMessage] = useState()
     const [entry, setEntry] = useState("")
     const { category_id } = useParams()
-    const { categories, dispatch } = useContext(stateContext)
+    const { token, categories, dispatch } = useContext(stateContext)
     const category = categories.find(cat => cat.id == category_id)
     const history = useHistory()
 
@@ -17,7 +17,7 @@ const NewEntry = (props) => {
     const submit = async (event) => {
         event.preventDefault()
         const newEntry = { category_id: category_id, content: entry }
-        const res = await fetch("http://localhost:4000/api/v1/entries", {
+        const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}entries`, {
                     method: "POST",
                     body: JSON.stringify(newEntry),
                     headers: {
